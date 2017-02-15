@@ -1,0 +1,4 @@
+Button sprite logic (15 fps)
+
+1. Stay at frame 1 until event on click
+2. On click run frame 2-8

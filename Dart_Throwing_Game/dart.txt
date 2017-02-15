@@ -1,0 +1,36 @@
+Flow:
+
+1. Hold en el frame 0, encima poner la UI
+de los tokens con el shape que tenemos
+de 50% opacidad
+ 
+
+2. Después de escoger los tokens, al momento
+de darle play se hace el call del playId y 
+mientras se reproducen los siguientes frames
+de manera de ganar tiempo en el load:
+
+	a. Frame 1 x 1000 ms (3 sec left)
+	b. Frame 2 x 1000 ms (2 sec left)
+	c. Frame 3 x 1000 ms (1 sec left)
+
+3. Luego, se ejecutará la animación del playId
+y en los siguientes frames hacer estos loops
+en PINGPONG:
+
+*-camera side view loop en pingpong
+(4x en frame 9 - 12)
+
+4. Luego, la cámara se irá al frente
+y ahí hacer este infinite loop:
+
+*-showing points front camera loop
+loop en pingpong hasta que se presione
+"play again" de los siguientes frames 26-29
+
+  a. Aquí se mostrarán los puntos conseguidos 
+en los tableros laterales en letra Montserrat
+
+  b. El botón play again va debajo del tablero
+del dart, centrado
+

@@ -1,0 +1,8 @@
+playButton
+
+frame flow
+
+0 = rest
+play 1 to 2 = hover
+play 2 to 0 = de-hover
+play 2 to 10 = clicked

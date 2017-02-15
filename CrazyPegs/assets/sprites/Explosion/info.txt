@@ -1,0 +1,4 @@
+30 fps
+img 139 x 73
+sprite 1024 x 512
+49 frames

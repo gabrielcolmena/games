@@ -1,0 +1,3 @@
+Img: 31x40 px
+Sprite: 256x80
+16 frames
