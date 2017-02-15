@@ -1,4 +1,0 @@
-15 fps
-img 97x33
-sprt 256x256
-8 frames
