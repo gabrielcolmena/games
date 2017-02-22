@@ -1,3 +1,0 @@
-each frame: 46 x 59 px;
-sprite: 230 x 118 px;
-10 frames

@@ -1,0 +1,5 @@
+20 fps
+120 x 560 frame
+600 x 560 sprite
+5 frames
+loop x3

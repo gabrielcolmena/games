@@ -1,3 +1,0 @@
-img: 42 x 44
-sprite: 512 x 256
-45 frames
