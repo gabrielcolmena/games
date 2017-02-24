@@ -1,0 +1,5 @@
+20 fps
+249 x 150
+1024 x 1024
+20 frames
+flow: loop en "cycle"

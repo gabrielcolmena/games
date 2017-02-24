@@ -1,0 +1,13 @@
+token buttons:
+
+15 fps
+55 x 22
+128 x 128
+8 frames
+
+Spin button
+15 fps
+86 x 34
+256 x 256
+8 frames
+

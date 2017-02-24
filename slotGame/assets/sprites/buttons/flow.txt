@@ -1,0 +1,4 @@
+flow: 
+rest = frame 0
+hover= 0-2
+clicked= 3-7
