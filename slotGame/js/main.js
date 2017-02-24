@@ -40,7 +40,7 @@ var loaderState = {
         //showing loaging images
         this.add.image(0, 0, 'background');
         var style = { font: "30px Montserrat", fill: "#fff"};
-        this.add.text(200, 180, 'Loding game ', style);
+        this.add.text(180, 180, 'Loading game ', style);
 
         //loaging images
         this.load.image('points_icon', './assets/img/points_icon.png');
