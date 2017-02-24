@@ -325,6 +325,7 @@ var tokensState = {
                                 });
                                 //setting the event for the start button
                                 againButton.events.onInputDown.add(function(){
+                                    game.add.audio('click').play();
                                     againButton.animations.play('click', 15, false);
                                     setTimeout(function(){
                                         __tokensToPlay = 0;
