@@ -6,7 +6,9 @@ var __userData,
     __tokensToPlayJSON,
     __tokensToPlay = 0,
     __button_spin,
-    __soundEneabled = true;
+    __soundEneabled = true,
+    __click,
+    __spinning;
 
 var game = new Phaser.Game(560, 400, Phaser.CANVAS, 'Slot Game');
 
@@ -202,7 +204,8 @@ var tokensState = {
             text = this.add.text(220, 5, 'TOKENS', style);
             text = this.add.text(232, 25, __userData.tokenBalance, style);
             text = this.add.text(330, 25, __userData.pointBalance, style);
-        var tokensToText = this.add.text(500, 25, __tokensToPlay, style);
+        var styleBet = { font: "16px Montserrat", fill: "#fff"};
+        var tokensToText = this.add.text(497, 20, __tokensToPlay, styleBet);
     
         var ribbon1 = this.add.sprite(110, -84, 'ribbon1');
         var ribbon2 = this.add.sprite(225, -84, 'ribbon2');
@@ -220,8 +223,9 @@ var tokensState = {
         __button_spin = this.add.image(170 + 68, 340, 'button_spin');
         __button_spin.animations.add('disabled', [0]);
         __button_spin.animations.add('aviable', [1]);
-        __button_spin.animations.add('over', [1,2,3]);
-        __button_spin.animations.add('clicked', [4,5,6,7,8]);
+        __button_spin.animations.add('hover', [1,2,3]);
+        __button_spin.animations.add('out', [3,2,1]);
+        __button_spin.animations.add('down', [4,5,6,7,8,9]);
         var button_50 = this.add.image(290 + 68, 350, 'button_50');
         var button_250 = this.add.image(370 + 68, 350, 'button_250');
 
@@ -232,9 +236,12 @@ var tokensState = {
             setTimeout(function(){clean.loadTexture('clean', 0, false);},100)
             __tokensToPlay = 0;
             __button_spin.play('disabled', 20, false);
-            tokensToText.x = 500;
+            tokensToText.x = 497;
             tokensToText.setText(1);
         });
+
+        __click = game.add.audio('click');
+        __spinning = game.add.audio('spinnin');
 
         var tableId = this.add.image(155, -500, 'tableId');
         tableId.alpha = 0;
@@ -251,12 +258,18 @@ var tokensState = {
             game.add.tween(tableId).to({top: -500, alpha: 0}, 450, Phaser.Easing.Linear.None, true, 0, 0, false);
         });
 
+
         __button_spin.inputEnabled = true;
+        __button_spin.events.onInputOver.add(function(){ if(__tokensToPlay)__button_spin.play('hover', 20, false); });
+        __button_spin.events.onInputOut.add(function(){ if(__tokensToPlay)__button_spin.play('out', 20, false); });
         __button_spin.events.onInputDown.add(function(){
-            game.add.audio('boy').play();
             if(__tokensToPlay){
-                __button_spin.play('clicked', 20, false);
-                game.add.audio('spinnin').play();
+                __button_spin.play('down', 20, false);
+                __button_spin.events.onAnimationComplete.add(function(){
+                    __button_spin.inputEnabled = false;
+                })
+                __click.play();
+                __spinning.play();
                 __tokensToPlayJSON = playGame(__gameId, __tokensToPlay);
                 __tokensToPlayJSON.playId = __tokensToPlayJSON.playId == 1 ? 2 : __tokensToPlayJSON.playId;
                 initFrame.alpha = 0;
@@ -266,7 +279,6 @@ var tokensState = {
                 ribbon2.animations.play('rolling', 20, false);
                 ribbon3.alpha = 1;
                 ribbon3.animations.play('rolling', 20, false);
-                __button_spin.inputEnabled = false;
                 button_1.inputEnabled = false;
                 button_10.inputEnabled = false;
                 button_50.inputEnabled = false;
@@ -331,7 +343,7 @@ var tokensState = {
                             }
                             var stars = game.add.sprite(90, 90, (__tokensToPlayJSON.playId == 10) ? 'golden_stars' : 'white_stars');
                             stars.animations.add('shining');
-                            stars.animations.play('shining', 20, false);
+                            stars.animations.play('shining', 20, true);
                             if(__tokensToPlayJSON.playId == 10){
                                 var bigwin = game.add.sprite(40 + 90,120,'big_win');
                                 bigwin.scale.setTo(.5, .5);
@@ -407,7 +419,7 @@ function setTokensToPlay(element, tokensToText){
     var tokens = parseInt(element.key.split('_')[1]);
     __tokensToPlay = (tokens + __tokensToPlay) > __userData.tokenBalance ? __userData.tokenBalance : (tokens + __tokensToPlay > 250) ? 250 : (tokens + __tokensToPlay);
     tokensToText.setText(__tokensToPlay);
-    tokensToText.x = (__tokensToPlay.toString().length == 3) ? 493 : (__tokensToPlay.toString().length == 2) ? 496 : 500;
+    tokensToText.x = (__tokensToPlay.toString().length == 3) ? 487 : (__tokensToPlay.toString().length == 2) ? 492 : 497;
     
 };
 
