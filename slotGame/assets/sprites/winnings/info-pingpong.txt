@@ -1,0 +1,8 @@
+coffee sprite
+loopear pingpong
+desde el frame 27 hasta el 43
+
+los demás pingpong
+desde el frame 25 al 30
+
+el del logo lo deja continue.
