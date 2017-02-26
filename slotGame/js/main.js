@@ -237,7 +237,7 @@ var tokensState = {
             __tokensToPlay = 0;
             __button_spin.play('disabled', 20, false);
             tokensToText.x = 497;
-            tokensToText.setText(1);
+            tokensToText.setText(__tokensToPlay);
         });
 
         __click = game.add.audio('click');
@@ -272,6 +272,7 @@ var tokensState = {
                 __spinning.play();
                 __tokensToPlayJSON = playGame(__gameId, __tokensToPlay);
                 __tokensToPlayJSON.playId = __tokensToPlayJSON.playId == 1 ? 2 : __tokensToPlayJSON.playId;
+                __tokensToPlayJSON.playId = 9;
                 initFrame.alpha = 0;
                 ribbon1.alpha = 1;
                 ribbon1.animations.play('rolling', 20, false);
