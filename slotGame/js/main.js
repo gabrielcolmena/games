@@ -272,7 +272,6 @@ var tokensState = {
                 __spinning.play();
                 __tokensToPlayJSON = playGame(__gameId, __tokensToPlay);
                 __tokensToPlayJSON.playId = __tokensToPlayJSON.playId == 1 ? 2 : __tokensToPlayJSON.playId;
-                __tokensToPlayJSON.playId = 9;
                 initFrame.alpha = 0;
                 ribbon1.alpha = 1;
                 ribbon1.animations.play('rolling', 20, false);
@@ -414,7 +413,7 @@ function buttonBehaviorDown(element){
     game.add.audio('click').play();
     element.animations.add('clicked',[3,4,5,6,7]);
     element.animations.play('clicked', 20, false);
-    __button_spin.play('aviable', 20, false);
+    if(__userData.tokenBalance) __button_spin.play('aviable', 20, false);
 }
 
 function setTokensToPlay(element, tokensToText){
