@@ -52,7 +52,6 @@ var loaderState = {
         this.load.image('sound_hover', './assets/img/sound-hover.png');
         this.load.image('sound_off', './assets/img/sound-off.png');
         this.load.image('dot1', './assets/img/dot1.png');
-        this.load.image('dot2', './assets/img/dot2.png');
         this.load.image('clean', './assets/img/clean.png');
         this.load.image('clean2', './assets/img/clean2.png');
         this.load.image('bet', './assets/img/bet.png');
@@ -159,13 +158,9 @@ var tokensState = {
         __userData = getStartData(__gameId);
         this.add.image(0, 0, 'background');
 
-        this.add.image(46, 104, 'dot2');
-        this.add.image(46, 184, 'dot1');
-        this.add.image(46, 264, 'dot2');
-        this.add.image(500, 104, 'dot2');
-        this.add.image(500, 184, 'dot1');
-        this.add.image(500, 264, 'dot2');
-        this.add.image(480, 15, 'bet');
+        this.add.image(46, 198, 'dot1');
+        this.add.image(500, 198, 'dot1');
+        this.add.image(474, 15, 'bet');
 
         var initFrame = this.add.image(130,78, 'init-frame');
 
