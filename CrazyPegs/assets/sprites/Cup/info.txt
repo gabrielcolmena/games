@@ -1,0 +1,4 @@
+15 fps
+41 x 43
+sprite: 512 x 256
+45 frames

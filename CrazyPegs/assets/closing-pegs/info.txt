@@ -1,0 +1,2 @@
+Numeros escalados a un 70% 
+Los labels centrados en X con respecto al botón Play again

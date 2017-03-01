@@ -1,0 +1,4 @@
+15 fps
+img 262 x 265
+sprite 2048 x 2048
+44 frames

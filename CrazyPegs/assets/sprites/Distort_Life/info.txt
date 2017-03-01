@@ -1,0 +1,3 @@
+img: 560 x 400
+sprite: 2048 x 2048
+8 frames

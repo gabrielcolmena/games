@@ -1,0 +1,3 @@
+img: 29x31 px
+sprite: 256x256 px
+45 frames
