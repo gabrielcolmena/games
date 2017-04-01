@@ -9,6 +9,7 @@ var __userData,
     __soundEneabled = true,
     __click,
     __spinning;
+    __row = 0;
 
 var game = new Phaser.Game(560, 400, Phaser.CANVAS, 'Slot Game');
 
@@ -60,6 +61,9 @@ var loaderState = {
         this.load.image('about', './assets/img/about.png');
         this.load.image('about-hover', './assets/img/about-hover.png');
         this.load.image('init-frame', './assets/img/init-frame.png');
+        this.load.image('played-tokens', './assets/img/played-tokens.png');
+        this.load.image('points-won', './assets/img/points-won.png');
+        
 
         //loading sprites
         this.load.spritesheet('button_1', './assets/sprites/buttons/1.png', 55, 22, 8);
@@ -68,6 +72,7 @@ var loaderState = {
         this.load.spritesheet('button_250', './assets/sprites/buttons/250.png', 55, 22, 8);
         this.load.spritesheet('button_spin', './assets/sprites/buttons/spin.png', 86, 34, 9);
         this.load.spritesheet('numbers', './assets/sprites/n.png', 50, 59, 10);
+        this.load.spritesheet('n_tokens', './assets/sprites/n_tokens.png', 50, 59, 10);
         this.load.spritesheet('ribbon1', './assets/sprites/ribbons/ribbon1.png', 120, 560, 5);
         this.load.spritesheet('ribbon2', './assets/sprites/ribbons/ribbon2.png', 120, 560, 5);
         this.load.spritesheet('ribbon3', './assets/sprites/ribbons/ribbon3.png', 120, 560, 5);
@@ -107,11 +112,16 @@ var loaderState = {
         this.load.spritesheet('winning_ice_cream', './assets/sprites/winnings/ice_cream.png', 560, 400, 60);
         this.load.spritesheet('ice_cream_2', './assets/sprites/icons/ice_cream/ice_cream2.png', 120, 400, 30);
         this.load.spritesheet('ice_cream_3', './assets/sprites/icons/ice_cream/ice_cream3.png', 120, 400, 30);
+        this.load.spritesheet('winning_popcorn', './assets/sprites/winnings/popcorn.png', 560, 400, 60);
+        this.load.spritesheet('popcorn_1', './assets/sprites/icons/popcorn/popcorn1.png', 120, 400, 30);
+        this.load.spritesheet('popcorn_2', './assets/sprites/icons/popcorn/popcorn2.png', 120, 400, 30);
+        this.load.spritesheet('popcorn_3', './assets/sprites/icons/popcorn/popcorn3.png', 120, 400, 30);
         this.load.spritesheet('again_button', './assets/sprites/play_again_button/again.png', 147, 33, 10);
         this.load.spritesheet('confetti', './assets/sprites/confetti/confetti.png', 560, 400, 30);
         this.load.spritesheet('big_win', './assets/sprites/big_win/big_win.png', 277, 273, 40);
         this.load.spritesheet('golden_stars', './assets/sprites/stars/golden-stars.png', 249, 150, 20);
         this.load.spritesheet('white_stars', './assets/sprites/stars/white-stars.png', 249, 150, 20);
+        this.load.spritesheet('message', './assets/sprites/msg.png', 560, 400, 76);
 
         //loading sounds
         this.load.audio('spinnin', './assets/sounds/spinnin.mp3');
@@ -131,7 +141,7 @@ var loaderState = {
 
 var tokensState = {
 
-    playIdsTable: ['','','coffee', 'cookies', 'ice_cream', 'cake', 'fries', 'hotdog', 'hamburguer', 'pizza', 'logo'],
+    playIdsTable: ['','coffee', 'cookies', 'ice_cream', 'cake', 'popcorn', 'fries', 'hotdog', 'hamburguer', 'pizza', 'logo'],
     prizesTable: [0, 0, 2, 4, 8, 10, 25, 100, 250, 500, 2500, 5000],
 
     numbersArray: [
@@ -266,8 +276,8 @@ var tokensState = {
                 __click.play();
                 __spinning.play();
                 __tokensToPlayJSON = playGame(__gameId, __tokensToPlay);
-                __tokensToPlayJSON.playId = __tokensToPlayJSON.playId == 1 ? 2 : __tokensToPlayJSON.playId;
                 initFrame.alpha = 0;
+                //__tokensToPlayJSON.playId = 10;
                 ribbon1.alpha = 1;
                 ribbon1.animations.play('rolling', 20, false);
                 ribbon2.alpha = 1;
@@ -303,8 +313,10 @@ var tokensState = {
                             winning.animations.add('winning', tokensState.pingPongArray[index]);
                             game.add.audio((__tokensToPlayJSON.playId == 10 || __tokensToPlayJSON.playId == 2) ? 'boy2' : 'boy').play()
                             winning.animations.play('winning', 20, false);
+                            game.add.image(40, 180, 'played-tokens');
+                            game.add.image(190, 180, 'points-won');
                             setTimeout(function(){
-                                var againButton = game.add.sprite(35 + 90, 350, 'again_button');
+                                var againButton = game.add.sprite(35 + 60, 350, 'again_button');
                                 againButton.animations.add('click');
 
                                 againButton.inputEnabled = true;
@@ -320,6 +332,7 @@ var tokensState = {
                                 });
                                 //setting the event for the start button
                                 againButton.events.onInputDown.add(function(){
+                                    __row++;
                                     game.add.audio('click').play();
                                     againButton.animations.play('click', 15, false);
                                     setTimeout(function(){
@@ -330,9 +343,20 @@ var tokensState = {
                             }, 1000);
                             var amount = tokensState.prizesTable[__tokensToPlayJSON.playId];
                             var n = ("" + amount).split("");
-                            var distance = (amount.toString().length == 4 ? 140 : amount.toString().length == 3 ? 132 : amount.toString().length == 2 ? 126 : 120) + 90;
+                            var distance = (amount.toString().length == 4 ? 200 : amount.toString().length == 3 ? 194 : amount.toString().length == 2 ? 188 : 184) + 90;
+                            distance -= 22;
                             for(var i = 0; i < amount.toString().length; i++){
-                                var number = tokensState.add.sprite((parseInt(i * 34) + distance) - (25 * (n.length)), game.world.centerY + 80, 'numbers');
+                                var number = tokensState.add.sprite((parseInt(i * 34) + distance) - (25 * (n.length)), game.world.centerY + 20, 'numbers');
+                                number.scale.setTo(.8, .8);
+                                number.animations.add('animation', tokensState.numbersArray[parseInt(n[i])]);
+                                number.animations.play('animation', 20, false);
+                            }
+                            amount = __tokensToPlay;
+                            n = ("" + amount).split("");
+                            distance = (amount.toString().length == 4 ? 200 : amount.toString().length == 3 ? 194 : amount.toString().length == 2 ? 188 : 184) + 90;
+                            distance -= 174;
+                            for(var i = 0; i < amount.toString().length; i++){
+                                var number = tokensState.add.sprite((parseInt(i * 34) + distance) - (25 * (n.length)), game.world.centerY + 20, 'n_tokens');
                                 number.scale.setTo(.8, .8);
                                 number.animations.add('animation', tokensState.numbersArray[parseInt(n[i])]);
                                 number.animations.play('animation', 20, false);
@@ -341,7 +365,7 @@ var tokensState = {
                             stars.animations.add('shining');
                             stars.animations.play('shining', 20, true);
                             if(__tokensToPlayJSON.playId == 10){
-                                var bigwin = game.add.sprite(40 + 90,120,'big_win');
+                                var bigwin = game.add.sprite(40 + 90,40,'big_win');
                                 bigwin.scale.setTo(.5, .5);
                                 bigwin.animations.add('big_win');
                                 bigwin.animations.play('big_win', 20, true);
@@ -390,6 +414,30 @@ var tokensState = {
         button_250.events.onInputOver.add(function(element){ buttonBehaviorOver(element); });
         button_250.events.onInputOut.add(function(element){ buttonBehaviorOut(element); });
 
+        if(!__row){
+            var message = this.add.sprite(0, 0, 'message');
+            var arr = [];
+
+            for(var i = 0; i < 75; i++) arr.push(i);
+
+            message.animations.add('outing', arr);
+            message.animations.add('inning', arr.reverse());
+            message.animations.play('outing');
+
+            setTimeout(() => {
+                message.animations.play('inning');
+                message.events.onAnimationComplete.add(() => {
+                    message.destroy();
+                });
+            }, 5000);
+
+        
+            message.inputEnabled = true;
+            message.events.onInputDown.add(() => {
+                message.animations.play('inning');
+                message.events.onAnimationComplete.add(() => {message.destroy();});
+            });            
+        }
 
     }
 };
